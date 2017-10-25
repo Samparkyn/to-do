@@ -7,7 +7,7 @@ export default class List extends Component {
   state = {
     items: []
   }
-  // can u hear me
+  
   addHandler = () => {
     // grab input value
     const value = this.input.value
@@ -25,13 +25,31 @@ export default class List extends Component {
     this.input.value = ''
   }
   
+  
+  clickHandler = (event) => {
+    const newItems = Array.from(this.state.items)
+    const idx      = parseInt(event.currentTarget.dataset.idx)
+    const newValue = !newItems[idx]['done']
+    
+    newItems[idx]['done'] = newValue
+    this.setState({ items: newItems })
+  }
+  
+  
   setInputRef = el => this.input = el
   
   render() {
     const { items } = this.state
 
     const itemRows = items.map((item, idx) => {
-      return <ItemRow key={idx} item={item} />
+      return (
+        <ItemRow
+          idx={idx}
+          key={idx}
+          item={item}
+          clickHandler={this.clickHandler}
+        />
+      )
     })
     
     return (
