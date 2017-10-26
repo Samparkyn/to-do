@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ItemRow from './ItemRow'
-
+import './list.css'
 
 export default class List extends Component {
   
@@ -27,15 +27,23 @@ export default class List extends Component {
   
   
   clickHandler = (event) => {
+    // clone state items
     const newItems = Array.from(this.state.items)
-    const idx      = parseInt(event.currentTarget.dataset.idx)
-    const newValue = !newItems[idx]['done']
     
+    // get idx of item
+    const idx      = parseInt(event.currentTarget.dataset.idx)
+    
+    // calculate new done value
+    const newValue = !newItems[idx]['done']
+
+    // update item (inside items) with new value
     newItems[idx]['done'] = newValue
+
+    // update state with new items
     this.setState({ items: newItems })
   }
-  
-  
+
+
   setInputRef = el => this.input = el
   
   render() {
