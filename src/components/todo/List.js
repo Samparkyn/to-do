@@ -18,13 +18,12 @@ export default class List extends Component {
     
     // new items object by cloning state items and adding item
     const items = Array.from(this.state.items)
-    items.push(item)
+    items.unshift(item)
     
     // update the state items
     this.setState({ items })
     this.input.value = ''
   }
-  
   
   clickHandler = (event) => {
     // clone state items
@@ -49,8 +48,12 @@ export default class List extends Component {
   render() {
     const { items } = this.state
 
-    const itemRows = items.map((item, idx) => {
-      return (
+
+    const todoList = [], doneList = []
+    
+    items.forEach((item, idx) => {
+      const isDone = item.done
+      const row = (
         <ItemRow
           idx={idx}
           key={idx}
@@ -58,6 +61,12 @@ export default class List extends Component {
           clickHandler={this.clickHandler}
         />
       )
+      
+      if (isDone) {
+        doneList.push(row)
+      } else {
+        todoList.push(row)
+      }
     })
     
     return (
@@ -68,7 +77,11 @@ export default class List extends Component {
           placeholder="Watcha gotta do?"
         />
         <button onClick={this.addHandler}>Add</button>
-        {itemRows}
+        List1
+        {todoList}
+        
+        List2
+        {doneList}
       </div>
     )
   }
